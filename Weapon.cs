@@ -1,26 +1,56 @@
 class Weapon
 {
-    public int Damage;
-    public int Bullets;
+    private int _damage;
+    private int _bullets;
+
+    public Weapon(int damage, int bullets)
+    {
+        _damage = damage;
+        _bullets = bullets;
+    }
 
     public void Fire(Player player)
     {
-        player.Health -= Damage;
-        Bullets -= 1;
+        if (_bullets <= 0)
+            return;
+
+        player.TakeDamage(_damage);
+        _bullets -= 1;
     }
 }
 
 class Player
 {
-    public int Health;
+    private int _health;
+
+    public Player(int health)
+    {
+        _health = health;
+    }
+
+    public void TakeDamage(int value)
+    {
+        if (_health <= 0)
+            return;
+
+        if (value < 0)
+            throw new ArgumentOutOfRangeException();
+
+        _health -= value;
+    }
 }
 
 class Bot
 {
-    public Weapon Weapon;
+    private Weapon _weapon;
+
+    public Bot(Weapon weapon)
+    {
+        _weapon = weapon;
+    }
 
     public void OnSeePlayer(Player player)
     {
-        Weapon.Fire(player);
+        _weapon.Fire(player);
     }
 }
