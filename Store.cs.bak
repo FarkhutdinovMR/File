@@ -1,4 +1,4 @@
-п»їusing System;
+using System;
 using System.Collections.Generic;
 
 namespace Store
@@ -17,19 +17,19 @@ namespace Store
             warehouse.Delive(iPhone12, 10);
             warehouse.Delive(iPhone11, 1);
 
-            //Р’С‹РІРѕРґ РІСЃРµС… С‚РѕРІР°СЂРѕРІ РЅР° СЃРєР»Р°РґРµ СЃ РёС… РѕСЃС‚Р°С‚РєРѕРј
+            //Вывод всех товаров на складе с их остатком
             warehouse.ShowInfo();
 
             Cart cart = shop.Cart();
             cart.Add(iPhone12, 4);
-            cart.Add(iPhone11, 3); //РїСЂРё С‚Р°РєРѕР№ СЃРёС‚СѓР°С†РёРё РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° С‚Р°Рє, РєР°Рє РЅРµС‚ РЅСѓР¶РЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° С‚РѕРІР°СЂР° РЅР° СЃРєР»Р°РґРµ
+            cart.Add(iPhone11, 3); //при такой ситуации возникает ошибка так, как нет нужного количества товара на складе
 
-            //Р’С‹РІРѕРґ РІСЃРµС… С‚РѕРІР°СЂРѕРІ РІ РєРѕСЂР·РёРЅРµ
+            //Вывод всех товаров в корзине
             cart.ShowInfo();
 
             Console.WriteLine(cart.Order().Paylink);
 
-            cart.Add(iPhone12, 9); //РћС€РёР±РєР°, РїРѕСЃР»Рµ Р·Р°РєР°Р·Р° СЃРѕ СЃРєР»Р°РґР° СѓР±РёСЂР°СЋС‚СЃСЏ Р·Р°РєР°Р·Р°РЅРЅС‹Рµ С‚РѕРІР°СЂС‹
+            cart.Add(iPhone12, 9); //Ошибка, после заказа со склада убираются заказанные товары
         }
     }
 
@@ -102,7 +102,7 @@ namespace Store
 
         public void ShowInfo()
         {
-            Console.WriteLine("РћСЃС‚Р°С‚РєРё РЅР° СЃРєР»Р°РґРµ:");
+            Console.WriteLine("Остатки на складе:");
 
             foreach (Cell cell in _goods)
                 cell.ShowInfo();
@@ -114,13 +114,13 @@ namespace Store
 
             if (goodIndex == -1)
             {
-                Console.WriteLine("РўРѕРІР°СЂ РЅР° СЃРєР»Р°РґРµ РЅРµ РЅР°Р№РґРµРЅ.");
+                Console.WriteLine("Товар на складе не найден.");
                 return false;
             }
 
             if (selectedCell.Count > _goods[goodIndex].Count)
             {
-                Console.WriteLine($"РќРµ РґРѕСЃС‚Р°С‚РѕС‡РЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РЅР° СЃРєР»Р°РґРµ: {selectedCell.Good.Name}");
+                Console.WriteLine($"Не достаточное количество на складе: {selectedCell.Good.Name}");
                 return false;
             }
 
@@ -155,7 +155,7 @@ namespace Store
         public Cart(Warehouse warehouse)
         {
             _warehouse = warehouse;
-            Paylink = "РўРѕРІР°СЂС‹ РєСѓРїР»РµРЅС‹.";
+            Paylink = "Товары куплены.";
             _goods = new List<Cell>();
         }
 
@@ -183,7 +183,7 @@ namespace Store
 
         public void ShowInfo()
         {
-            Console.WriteLine("РўРѕРІР°СЂС‹ РІ РєРѕСЂР·РёРЅРµ:");
+            Console.WriteLine("Товары в корзине:");
 
             foreach (Cell cell in _goods)
                 cell.ShowInfo();
