@@ -35,12 +35,12 @@ namespace Store
 
     class Good
     {
-        public string Name { get; private set; }
-
         public Good(string name)
         {
             Name = name;
         }
+
+        public string Name { get; private set; }
     }
 
     class Cell
@@ -48,7 +48,7 @@ namespace Store
         public Cell(Good good, int count)
         {
             if (count < 0)
-                throw new InvalidOperationException(nameof(count));
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             Good = good;
             Count = count;
@@ -132,7 +132,7 @@ namespace Store
 
     class Shop
     {
-        private Warehouse _warehouse;
+        private readonly Warehouse _warehouse;
 
         public Shop(Warehouse warehouse)
         {
@@ -147,17 +147,17 @@ namespace Store
 
     class Cart
     {
-        public readonly string Paylink;
-
         private List<Cell> _goods;
-        private Warehouse _warehouse;
+        private readonly Warehouse _warehouse;
 
         public Cart(Warehouse warehouse)
         {
             _warehouse = warehouse;
-            Paylink = "Товары куплены.";
             _goods = new List<Cell>();
+            Paylink = "Товары куплены.";
         }
+
+        public string Paylink { get; private set; }
 
         public void Add(Good good, int count)
         {
