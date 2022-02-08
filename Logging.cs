@@ -19,7 +19,7 @@ namespace Lesson
             Pathfinder fridayLogToConsole = new Pathfinder(new SecureConsoleLogWritter(new ConsoleLogWritter()));
             fridayLogToConsole.Find("пишет лог в консоль по пятницам.");
 
-            Pathfinder consoleLogAndfridayToFile = new Pathfinder(ConsolePool.Create(new ConsoleLogWritter(), new SecureConsoleLogWritter(new FileLogWritter())));
+            Pathfinder consoleLogAndfridayToFile = new Pathfinder(LoggerChain.Create(new ConsoleLogWritter(), new SecureConsoleLogWritter(new FileLogWritter())));
             consoleLogAndfridayToFile.Find("пишет лог в консоль а по пятницам ещэ и в файл.");
         }
     }
@@ -31,7 +31,7 @@ namespace Lesson
 
     class Pathfinder
     {
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         public Pathfinder(ILogger logger)
         {
@@ -44,11 +44,11 @@ namespace Lesson
         }
     }
 
-    class ConsolePool : ILogger
+    class LoggerChain : ILogger
     {
-        private ILogger[] _loggers;
+        private readonly ILogger[] _loggers;
 
-        public ConsolePool(ILogger[] loggers)
+        public LoggerChain(ILogger[] loggers)
         {
             _loggers = loggers;
         }
@@ -59,9 +59,9 @@ namespace Lesson
                 logger.WriteError(message);
         }
 
-        public static ConsolePool Create(params ILogger[] loggers)
+        public static LoggerChain Create(params ILogger[] loggers)
         {
-            return new ConsolePool(loggers);
+            return new LoggerChain(loggers);
         }
     }
 
@@ -83,7 +83,7 @@ namespace Lesson
 
     class SecureConsoleLogWritter : ILogger
     {
-        ILogger _logger;
+        private readonly ILogger _logger;
 
         public SecureConsoleLogWritter(ILogger logger)
         {
