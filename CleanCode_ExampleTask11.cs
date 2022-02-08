@@ -1,3 +1,3 @@
-int iArmySize = 10;
-int coinsNumber = 10;
-string strName = "Vladislav";
+private int _armySize = 10;
+private int _coin = 10;
+private string _name = "Vladislav";
