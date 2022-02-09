@@ -2,7 +2,9 @@ class Weapon
 {
     private int _bullets;
 
-    public bool CanShoot() => _bullets > 0;
+    public bool CanShoot() => _bullets > Empty;
+    public void Shoot() => _bullets -= BulletsPerShot;
 
-    public void Shoot() => _bullets -= 1;
+    private const int Empty = 0;
+    private const int BulletsPerShot = 1;
 }
