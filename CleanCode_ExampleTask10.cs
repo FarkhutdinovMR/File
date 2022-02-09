@@ -6,5 +6,5 @@ class Weapon
 	public void Shoot() => _bullets -= BulletsPerShot;
 
 	private const int Empty = 0;
-	private const int BulletInOneShoot = 1;
+	private const int BulletsPerShot = 1;
 }
