@@ -1,7 +1,7 @@
 class Player { }
 class Gun { }
 class Chaser { }
-class UnitSpawner
+class Units
 {
-    public IReadOnlyCollection<Unit> Units {get; private set;}
+    public IReadOnlyCollection<Unit> values {get; private set;}
 }
