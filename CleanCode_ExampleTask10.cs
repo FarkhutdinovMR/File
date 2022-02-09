@@ -4,7 +4,7 @@ class Weapon
 
 	public bool CanShoot() => _bullets > Empty;
 
-	public void Shoot() => _bullets -= BulletInOneShoot;
+	public void Shoot() => _bullets -= BulletsPerShot;
 
 	private const int Empty = 0;
 	private const int BulletInOneShoot = 1;
