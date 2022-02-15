@@ -42,6 +42,9 @@ namespace PaymentSystems
         {
             public string GetPayingLink(Order order)
             {
+                if (order == null)
+                    throw new ArgumentNullException(nameof(order));
+
                 MD5 md5 = MD5.Create();
                 byte[] hash = md5.ComputeHash(Encoding.UTF8.GetBytes(order.Id.ToString()));
 
@@ -53,6 +56,9 @@ namespace PaymentSystems
         {
             public string GetPayingLink(Order order)
             {
+                if (order == null)
+                    throw new ArgumentNullException(nameof(order));
+
                 MD5 md5 = MD5.Create();
                 byte[] hash = md5.ComputeHash(Encoding.UTF8.GetBytes(order.Id.ToString() + order.Amount.ToString()));
 
@@ -68,6 +74,9 @@ namespace PaymentSystems
 
             public string GetPayingLink(Order order)
             {
+                if (order == null)
+                    throw new ArgumentNullException(nameof(order));
+
                 SHA1 sha1 = SHA1.Create();
                 byte[] hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(order.Amount.ToString() + order.Id + _secretKey));
 
