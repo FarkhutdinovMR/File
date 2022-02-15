@@ -47,6 +47,9 @@ namespace Store
     {
         public Cell(Good good, int count)
         {
+            if (good == null)
+                throw new ArgumentNullException(nameof(good));
+
             if (count < 0)
                 throw new ArgumentOutOfRangeException(nameof(count));
 
@@ -59,6 +62,9 @@ namespace Store
 
         public void Merge(Cell newCell)
         {
+            if (newCell == null)
+                throw new ArgumentNullException(nameof(newCell));
+
             if (newCell.Good != Good)
                 throw new InvalidOperationException();
 
@@ -67,6 +73,9 @@ namespace Store
 
         public void Extract(Cell cell)
         {
+            if (cell == null)
+                throw new ArgumentNullException(nameof(cell));
+
             if (cell.Good != Good)
                 throw new InvalidOperationException();
 
@@ -81,7 +90,7 @@ namespace Store
 
     class Warehouse
     {
-        private List<Cell> _goods = new List<Cell>();
+        private readonly List<Cell> _goods = new List<Cell>();
 
         public Warehouse()
         {
@@ -90,6 +99,9 @@ namespace Store
 
         public void Delive(Good good, int count)
         {
+            if (good == null)
+                throw new ArgumentNullException(nameof(good));
+
             var newCell = new Cell(good, count);
 
             int goodIndex = _goods.FindIndex(cell => cell.Good == good);
@@ -110,6 +122,9 @@ namespace Store
 
         public bool TryTake(Cell selectedCell)
         {
+            if (selectedCell == null)
+                throw new ArgumentNullException(nameof(selectedCell));
+
             int goodIndex = _goods.FindIndex(cell => cell.Good == selectedCell.Good);
 
             if (goodIndex == -1)
@@ -136,6 +151,9 @@ namespace Store
 
         public Shop(Warehouse warehouse)
         {
+            if (warehouse == null)
+                throw new ArgumentNullException(nameof(warehouse));
+
             _warehouse = warehouse;
         }
 
@@ -147,11 +165,14 @@ namespace Store
 
     class Cart
     {
-        private List<Cell> _goods;
+        private readonly List<Cell> _goods;
         private readonly Warehouse _warehouse;
 
         public Cart(Warehouse warehouse)
         {
+            if (warehouse == null)
+                throw new ArgumentNullException(nameof(warehouse));
+
             _warehouse = warehouse;
             _goods = new List<Cell>();
             Paylink = "Товары куплены.";
@@ -161,6 +182,9 @@ namespace Store
 
         public void Add(Good good, int count)
         {
+            if (good == null)
+                throw new ArgumentNullException(nameof(good));
+
             var newCell = new Cell(good, count);
 
             if (_warehouse.TryTake(newCell) == false)
